@@ -93,7 +93,14 @@ describe('ISACalculator', function(){
       earlyExitDate: undefined,
       endDate: new Date('2017-04-18T07:00:00.000Z'),
       cancellationDate: new Date('2016-08-09T07:00:00.000Z'),
+      expectedISAProgramFeeMonthlyPayment: undefined,
+      expectedISAStipenedMonthlyPayment: undefined,
+      earlyExitISAProgramFeeMonthlyPayment: undefined,
+      earlyExitISAStipenedMonthlyPayment: undefined,
+      programFeePaymentTerm: undefined,
+      totalFindingAmount: undefined,
     })
   })
 
 })
+

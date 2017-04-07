@@ -50,22 +50,34 @@ const ISACalculator = function(spec){
   })
 
   //
-  // const expectedISAProgramFeeMonthlyPayment
+  const expectedISAProgramFeeMonthlyPayment = calculateExpectedISAProgramFeeMonthlyPayment({
+
+  })
 
   //
-  // const expectedISAStipenedMonthlyPayment
+  const expectedISAStipenedMonthlyPayment = calculateExpectedISAStipenedMonthlyPayment({
+
+  })
 
   //
-  // const earlyExitISAProgramFeeMonthlyPayment
+  const earlyExitISAProgramFeeMonthlyPayment = calculateEarlyExitISAProgramFeeMonthlyPayment({
+
+  })
 
   //
-  // const earlyExitISAStipenedMonthlyPayment
+  const earlyExitISAStipenedMonthlyPayment = calculateEarlyExitISAStipenedMonthlyPayment({
+
+  })
 
   //
-  // const programFeePaymentTerm
+  const programFeePaymentTerm = calculateProgramFeePaymentTerm({
+
+  })
 
   //
-  // const totalFindingAmount
+  const totalFindingAmount = calculateTotalFindingAmount({
+
+  })
 
   return {
     startDate,
@@ -75,11 +87,18 @@ const ISACalculator = function(spec){
     earlyExitDate,
     endDate,
     cancellationDate,
+    expectedISAProgramFeeMonthlyPayment,
+    expectedISAStipenedMonthlyPayment,
+    earlyExitISAProgramFeeMonthlyPayment,
+    earlyExitISAStipenedMonthlyPayment,
+    programFeePaymentTerm,
+    totalFindingAmount,
   }
 }
 
 const isDate = function(date){
-  return date instanceof Date
+  return date instanceof Date ||
+    /^\d\d\d\d-\d\d-\d\d$/.test(date)
 }
 
 const isInteger = function(integer){
@@ -99,6 +118,31 @@ const calculateEndDate = function(spec){
 const calculateCancellationDate = function(spec){
   return moment(spec.startDate).add(35, 'days').toDate()
 }
+
+const calculateExpectedISAProgramFeeMonthlyPayment = function(){
+
+}
+
+const calculateExpectedISAStipenedMonthlyPayment = function(){
+
+}
+
+const calculateEarlyExitISAProgramFeeMonthlyPayment = function(){
+
+}
+
+const calculateEarlyExitISAStipenedMonthlyPayment = function(){
+
+}
+
+const calculateProgramFeePaymentTerm = function(){
+
+}
+
+const calculateTotalFindingAmount = function(){
+
+}
+
 
 
 module.exports = ISACalculator
