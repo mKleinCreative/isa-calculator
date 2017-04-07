@@ -5,79 +5,53 @@ const ISACalculator = function(spec){
 
   // Date
   const startDate = spec.startDate
-  if (!isDate(startDate))
-    throw new Error('startDate must be a Date')
+  validateStartDate(startDate)
 
   // Integer
   // USA cents
   const stipendAmount = spec.stipendAmount
-  if (!isInteger(stipendAmount))
-    throw new Error('stipendAmount must be an integer')
+  validateStipendAmount(stipendAmount)
 
   // Boolean
   const takingTheLaptopStipend = spec.takingTheLaptopStipend
-  if (!isBoolean(takingTheLaptopStipend))
-    throw new Error('takingTheLaptopStipend must be a boolean')
+  validateTakingTheLaptopStipend(takingTheLaptopStipend)
 
   // Integer
   // USA Cents
   // > $50K
   const expectedAnnualSalary = spec.expectedAnnualSalary
-  if (!isInteger(expectedAnnualSalary))
-    throw new Error('expectedAnnualSalary must be an integer')
-  if (expectedAnnualSalary < 50000)
-    throw new Error('expectedAnnualSalary must be greater than $50,000')
-
+  validateExpectedAnnualSalary(expectedAnnualSalary)
 
   // Date
   const earlyExitDate = spec.earlyExitDate
-  if (earlyExitDate && !isDate(earlyExitDate))
-    throw new Error('earlyExitDate must be a Date')
-  if (earlyExitDate && earlyExitDate <= startDate)
-    throw new Error('earlyExitDate must be after startDate')
+  validateEarlyExitDate(earlyExitDate, startDate)
 
 
   // Date
   // the Friday of the 40th week (minus week long breaks)
-  const endDate = calculateEndDate({
-    startDate,
-  })
+  const endDate = calculateEndDate(startDate)
 
   // Date
   // 35 days after start date (rounded forward to Monday)
-  const cancellationDate = calculateCancellationDate({
-    startDate,
-  })
+  const cancellationDate = calculateCancellationDate(startDate)
 
   //
-  const expectedISAProgramFeeMonthlyPayment = calculateExpectedISAProgramFeeMonthlyPayment({
-
-  })
+  const expectedISAProgramFeeMonthlyPayment = calculateExpectedISAProgramFeeMonthlyPayment()
 
   //
-  const expectedISAStipenedMonthlyPayment = calculateExpectedISAStipenedMonthlyPayment({
-
-  })
+  const expectedISAStipenedMonthlyPayment = calculateExpectedISAStipenedMonthlyPayment()
 
   //
-  const earlyExitISAProgramFeeMonthlyPayment = calculateEarlyExitISAProgramFeeMonthlyPayment({
-
-  })
+  const earlyExitISAProgramFeeMonthlyPayment = calculateEarlyExitISAProgramFeeMonthlyPayment()
 
   //
-  const earlyExitISAStipenedMonthlyPayment = calculateEarlyExitISAStipenedMonthlyPayment({
-
-  })
+  const earlyExitISAStipenedMonthlyPayment = calculateEarlyExitISAStipenedMonthlyPayment()
 
   //
-  const programFeePaymentTerm = calculateProgramFeePaymentTerm({
-
-  })
+  const programFeePaymentTerm = calculateProgramFeePaymentTerm()
 
   //
-  const totalFindingAmount = calculateTotalFindingAmount({
-
-  })
+  const totalFindingAmount = calculateTotalFindingAmount()
 
   return {
     startDate,
@@ -110,12 +84,42 @@ const isBoolean = function(boolean) {
   return typeof boolean === 'boolean'
 }
 
-const calculateEndDate = function(spec){
-  return moment(spec.startDate).add(41, 'weeks').format('YYYY-MM-DD')
+const validateStartDate = function(startDate){
+  if (!isDate(startDate))
+    throw new Error('startDate must be a Date')
 }
 
-const calculateCancellationDate = function(spec){
-  return moment(spec.startDate).add(35, 'days').format('YYYY-MM-DD')
+const validateStipendAmount = function(stipendAmount){
+  if (!isInteger(stipendAmount))
+    throw new Error('stipendAmount must be an integer')
+}
+
+const validateTakingTheLaptopStipend = function(takingTheLaptopStipend){
+  if (!isBoolean(takingTheLaptopStipend))
+    throw new Error('takingTheLaptopStipend must be a boolean')
+}
+
+const validateExpectedAnnualSalary = function(expectedAnnualSalary){
+  if (!isInteger(expectedAnnualSalary))
+    throw new Error('expectedAnnualSalary must be an integer')
+  if (expectedAnnualSalary < 50000)
+    throw new Error('expectedAnnualSalary must be greater than $50,000')
+}
+
+const validateEarlyExitDate = function(earlyExitDate, startDate){
+  if (earlyExitDate && !isDate(earlyExitDate))
+    throw new Error('earlyExitDate must be a Date')
+  if (earlyExitDate && earlyExitDate <= startDate)
+    throw new Error('earlyExitDate must be after startDate')
+}
+
+
+const calculateEndDate = function(startDate){
+  return moment(startDate).add(41, 'weeks').format('YYYY-MM-DD')
+}
+
+const calculateCancellationDate = function(startDate){
+  return moment(startDate).add(35, 'days').format('YYYY-MM-DD')
 }
 
 const calculateExpectedISAProgramFeeMonthlyPayment = function(){

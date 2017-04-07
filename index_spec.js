@@ -3,10 +3,6 @@ const ISACalculator = require('./')
 
 describe('ISACalculator', function(){
 
-  it('should be a function', function(){
-    expect(ISACalculator).to.be.a('function')
-  })
-
   it('should validate input', function(){
     expect(ISACalculator()).to.be.false
 
