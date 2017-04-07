@@ -1,25 +1,40 @@
 const moment = require('moment')
 
-const ISACalculator = function(conf){
+const ISACalculator = function(spec){
+  if (typeof spec !== 'object') return false
 
   // Date
-  const startDate = conf.startDate
+  const startDate = spec.startDate
+  if (!isDate(startDate))
+    throw new Error('startDate must be a Date')
 
   // Integer
   // USA cents
-  const stipendAmount = conf.stipendAmount
+  const stipendAmount = spec.stipendAmount
+  if (!isInteger(stipendAmount))
+    throw new Error('stipendAmount must be an integer')
 
   // Boolean
-  const takingTheLaptopStipend = conf.takingTheLaptopStipend
+  const takingTheLaptopStipend = spec.takingTheLaptopStipend
+  if (!isBoolean(takingTheLaptopStipend))
+    throw new Error('takingTheLaptopStipend must be a boolean')
 
   // Integer
   // USA Cents
   // > $50K
-  const expectedAnnualSalary = conf.expectedAnnualSalary
+  const expectedAnnualSalary = spec.expectedAnnualSalary
+  if (!isInteger(expectedAnnualSalary))
+    throw new Error('expectedAnnualSalary must be an integer')
+  if (expectedAnnualSalary < 50000)
+    throw new Error('expectedAnnualSalary must be greater than $50,000')
 
-  //
-  const earlyExitDate = conf.earlyExitDate
 
+  // Date
+  const earlyExitDate = spec.earlyExitDate
+  if (!isDate(earlyExitDate))
+    throw new Error('earlyExitDate must be a Date')
+  if (earlyExitDate <= startDate)
+    throw new Error('earlyExitDate must after startDate')
 
 
   // Date
@@ -35,33 +50,54 @@ const ISACalculator = function(conf){
   })
 
   //
-  const expectedISAProgramFeeMonthlyPayment
+  // const expectedISAProgramFeeMonthlyPayment
 
   //
-  const expectedISAStipenedMonthlyPayment
+  // const expectedISAStipenedMonthlyPayment
 
   //
-  const earlyExitISAProgramFeeMonthlyPayment
+  // const earlyExitISAProgramFeeMonthlyPayment
 
   //
-  const earlyExitISAStipenedMonthlyPayment
+  // const earlyExitISAStipenedMonthlyPayment
 
   //
-  const programFeePaymentTerm
+  // const programFeePaymentTerm
 
   //
-  const totalFindingAmount
+  // const totalFindingAmount
 
+  return {
+    startDate,
+    stipendAmount,
+    takingTheLaptopStipend,
+    expectedAnnualSalary,
+    earlyExitDate,
+    endDate,
+    cancellationDate,
+  }
+}
+
+const isDate = function(date){
+  return date instanceof Date
+}
+
+const isInteger = function(integer){
+  return typeof integer === 'number' &&
+    !integer.toString().includes('.')
+}
+
+const isBoolean = function(boolean) {
+  return typeof boolean === 'boolean'
+}
+
+const calculateEndDate = function(spec){
+  return moment(spec.startDate).add(41, 'weeks').toDate()
 }
 
 
-const calculateEndDate = function(conf){
-  return moment(conf.startDate).add(41, 'weeks').toDate()
-}
-
-
-const calculateCancellationDate = function(conf){
-  return moment(conf.startDate).add(35, 'days').toDate()
+const calculateCancellationDate = function(spec){
+  return moment(spec.startDate).add(35, 'days').toDate()
 }
 
 
