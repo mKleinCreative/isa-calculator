@@ -7,8 +7,6 @@ describe('ISACalculator', function(){
     expect(ISACalculator).to.be.a('function')
   })
 
-
-
   it('should validate input', function(){
     expect(ISACalculator()).to.be.false
 
@@ -39,6 +37,12 @@ describe('ISACalculator', function(){
     expectThisSpec({
       startDate: julyStartDate,
       stipendAmount: 0,
+      takingTheLaptopStipend: 'yes',
+    }).to.throw('takingTheLaptopStipend must be a boolean')
+
+    expectThisSpec({
+      startDate: julyStartDate,
+      stipendAmount: 0,
       takingTheLaptopStipend: true,
     }).to.throw('expectedAnnualSalary must be an integer')
 
@@ -54,6 +58,7 @@ describe('ISACalculator', function(){
       stipendAmount: 0,
       takingTheLaptopStipend: true,
       expectedAnnualSalary: 150000,
+      earlyExitDate: 5,
     }).to.throw('earlyExitDate must be a Date')
 
     expectThisSpec({
@@ -62,7 +67,7 @@ describe('ISACalculator', function(){
       takingTheLaptopStipend: true,
       expectedAnnualSalary: 150000,
       earlyExitDate: julyStartDate,
-    }).to.throw('earlyExitDate must after startDate')
+    }).to.throw('earlyExitDate must be after startDate')
 
     expectThisSpec({
       startDate: julyStartDate,
@@ -70,9 +75,25 @@ describe('ISACalculator', function(){
       takingTheLaptopStipend: true,
       expectedAnnualSalary: 150000,
       earlyExitDate: new Date('2016-06-01T07:00:00.000Z'),
-    }).to.throw('earlyExitDate must after startDate')
+    }).to.throw('earlyExitDate must be after startDate')
 
+  })
 
+  it('should calculate good', function(){
+    expect(ISACalculator({
+      startDate: new Date('2016-07-05T07:00:00.000Z'),
+      stipendAmount: 0,
+      takingTheLaptopStipend: true,
+      expectedAnnualSalary: 150000,
+    })).to.deep.equal({
+      startDate: new Date('2016-07-05T07:00:00.000Z'),
+      stipendAmount: 0,
+      takingTheLaptopStipend: true,
+      expectedAnnualSalary: 150000,
+      earlyExitDate: undefined,
+      endDate: new Date('2017-04-18T07:00:00.000Z'),
+      cancellationDate: new Date('2016-08-09T07:00:00.000Z'),
+    })
   })
 
 })

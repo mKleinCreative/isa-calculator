@@ -31,10 +31,10 @@ const ISACalculator = function(spec){
 
   // Date
   const earlyExitDate = spec.earlyExitDate
-  if (!isDate(earlyExitDate))
+  if (earlyExitDate && !isDate(earlyExitDate))
     throw new Error('earlyExitDate must be a Date')
-  if (earlyExitDate <= startDate)
-    throw new Error('earlyExitDate must after startDate')
+  if (earlyExitDate && earlyExitDate <= startDate)
+    throw new Error('earlyExitDate must be after startDate')
 
 
   // Date
