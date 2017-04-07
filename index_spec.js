@@ -81,18 +81,18 @@ describe('ISACalculator', function(){
 
   it('should calculate good', function(){
     expect(ISACalculator({
-      startDate: new Date('2016-07-05T07:00:00.000Z'),
+      startDate: '2016-07-05',
       stipendAmount: 0,
       takingTheLaptopStipend: true,
       expectedAnnualSalary: 150000,
     })).to.deep.equal({
-      startDate: new Date('2016-07-05T07:00:00.000Z'),
+      startDate: '2016-07-05',
       stipendAmount: 0,
       takingTheLaptopStipend: true,
       expectedAnnualSalary: 150000,
       earlyExitDate: undefined,
-      endDate: new Date('2017-04-18T07:00:00.000Z'),
-      cancellationDate: new Date('2016-08-09T07:00:00.000Z'),
+      endDate: '2017-04-18',
+      cancellationDate: '2016-08-09',
       expectedISAProgramFeeMonthlyPayment: undefined,
       expectedISAStipenedMonthlyPayment: undefined,
       earlyExitISAProgramFeeMonthlyPayment: undefined,
@@ -103,4 +103,3 @@ describe('ISACalculator', function(){
   })
 
 })
-

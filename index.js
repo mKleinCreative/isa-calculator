@@ -111,12 +111,11 @@ const isBoolean = function(boolean) {
 }
 
 const calculateEndDate = function(spec){
-  return moment(spec.startDate).add(41, 'weeks').toDate()
+  return moment(spec.startDate).add(41, 'weeks').format('YYYY-MM-DD')
 }
 
-
 const calculateCancellationDate = function(spec){
-  return moment(spec.startDate).add(35, 'days').toDate()
+  return moment(spec.startDate).add(35, 'days').format('YYYY-MM-DD')
 }
 
 const calculateExpectedISAProgramFeeMonthlyPayment = function(){
@@ -142,7 +141,5 @@ const calculateProgramFeePaymentTerm = function(){
 const calculateTotalFindingAmount = function(){
 
 }
-
-
 
 module.exports = ISACalculator
