@@ -76,27 +76,56 @@ describe('ISACalculator', function(){
 
   })
 
-  it('should calculate good', function(){
-    expect(ISACalculator({
-      startDate: '2016-07-05',
-      stipendAmount: 0,
-      takingTheLaptopStipend: true,
-      expectedAnnualSalary: 150000,
-    })).to.deep.equal({
-      startDate: '2016-07-05',
-      stipendAmount: 0,
-      takingTheLaptopStipend: true,
-      expectedAnnualSalary: 150000,
-      earlyExitDate: undefined,
-      endDate: '2017-04-18',
-      cancellationDate: '2016-08-09',
-      expectedISAProgramFeeMonthlyPayment: undefined,
-      expectedISAStipenedMonthlyPayment: undefined,
-      earlyExitISAProgramFeeMonthlyPayment: undefined,
-      earlyExitISAStipenedMonthlyPayment: undefined,
-      programFeePaymentTerm: undefined,
-      totalFindingAmount: undefined,
+  describe('should calculate correctly for', function(){
+    //
+    it('scenario v3', function(){
+      expect(ISACalculator({
+        startDate: '2016-07-05',
+        stipendAmount: 13846.00,
+        takingTheLaptopStipend: true, // 1846.00
+      })).to.deep.equal({
+        startDate: '2016-07-05',
+        stipendAmount: 0,
+        takingTheLaptopStipend: true,
+        expectedAnnualSalary: undefined,
+        earlyExitDate: undefined,
+        endDate: '2017-04-18',
+        cancellationDate: '2016-08-09',
+        totalStipendAmountRecieved: 15692.00,
+        programFeeMonthlyPercentage: 12.5, // <--- STATIC
+        // totalStipendAmountTaken / (maxStipendAmount[15692] * 8.5%)
+        // 15692 / (15692 * 8.5%)
+        stipenedMonthlyPercentage: 8.5, // %
+        //
+        // (0...42) months
+        programFeePaymentTerm: 36, // Months
+        stipenedFeePaymentTerm: 36, // Months STATIC
+        //
+        totalFindingAmount: 25500.00,
+        // (totalFindingAmount * 2)
+        capPaymentAmount: 51000.00,
+      })
+    })
+    it('scenario 2', function(){
+      expect(ISACalculator({
+        startDate: '2017-06-19',
+        stipendAmount: 0,
+        takingTheLaptopStipend: true,
+      })).to.deep.equal({
+        startDate: '2017-06-19',
+        stipendAmount: 0,
+        takingTheLaptopStipend: true,
+        expectedAnnualSalary: undefined,
+        earlyExitDate: undefined,
+        endDate: '2018-04-02',
+        cancellationDate: '2017-07-24',
+        expectedISAProgramFeeMonthlyPayment: undefined,
+        expectedISAStipenedMonthlyPayment: undefined,
+        earlyExitISAProgramFeeMonthlyPayment: undefined,
+        earlyExitISAStipenedMonthlyPayment: undefined,
+        programFeePaymentTerm: undefined,
+        totalFindingAmount: undefined,
+      })
     })
   })
-
 })

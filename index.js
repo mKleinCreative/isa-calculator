@@ -1,5 +1,62 @@
 const moment = require('moment')
+/*
 
+Usage:
+
+  ISACalculator({
+    // String
+    // formatted like YYYY-MM-DD
+    // required
+    startDate: '',
+
+    // Integer
+    // required
+    stipendAmount: '',
+
+    // Boolean
+    // required
+    takingTheLaptopStipend: true,
+
+    // Ignored for now
+    expectedAnnualSalary: '',
+
+    // Ignored for now
+    earlyExitDate: '',
+  })
+
+  // returns =>
+  {
+    startDate,
+    stipendAmount,
+    takingTheLaptopStipend,
+    expectedAnnualSalary,
+    // earlyExitDate,
+    session1EndDate
+    session2EndDate
+    session3EndDate
+    session4EndDate
+    session1Length
+    session2Length
+    session3Length
+    session4Length
+    session1percentageComplete
+    session2percentageComplete
+    session3percentageComplete
+    session4percentageComplete
+    endDate,
+    cancellationDate,
+    totalStipendAmountRecieved
+    programFeeMonthlyPercentage
+    stipenedMonthlyPercentage
+    programFeePaymentTerm
+    stipenedFeePaymentTerm
+    totalFindingAmount
+    capPaymentAmount
+  }
+
+
+
+*/
 const ISACalculator = function(spec){
   if (typeof spec !== 'object') return false
 
@@ -25,10 +82,19 @@ const ISACalculator = function(spec){
   // Date
   const earlyExitDate = spec.earlyExitDate
   validateEarlyExitDate(earlyExitDate, startDate)
-
+  //
+  // const session1EndDate = calculateSessionEndDate(startDate)
+  // const session2EndDate = calculateSessionEndDate(session1EndDate)
+  // const session3EndDate = calculateSessionEndDate(session2EndDate)
+  // const session4EndDate = calculateSessionEndDate(session3EndDate)
+  // const session1Length = calculateSessionLength(startDate, session1EndDate)
+  // const session2Length = calculateSessionLength(session1EndDate, session2EndDate)
+  // const session3Length = calculateSessionLength(session2EndDate, session3EndDate)
+  // const session4Length = calculateSessionLength(session3EndDate, session4EndDate)
 
   // Date
   // the Friday of the 40th week (minus week long breaks)
+  // const endDate = session4EndDate // calculateEndDate(startDate)
   const endDate = calculateEndDate(startDate)
 
   // Date
