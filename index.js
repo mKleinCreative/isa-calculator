@@ -100,6 +100,7 @@ const validateTakingTheLaptopStipend = function(takingTheLaptopStipend){
 }
 
 const validateExpectedAnnualSalary = function(expectedAnnualSalary){
+  if (typeof expectedAnnualSalary === 'undefined') return
   if (!isInteger(expectedAnnualSalary))
     throw new Error('expectedAnnualSalary must be an integer')
   if (expectedAnnualSalary < 50000)

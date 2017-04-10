@@ -14,7 +14,7 @@ describe('ISACalculator', function(){
 
     expectThisSpec({}).to.throw('startDate must be a Date')
 
-    const julyStartDate = new Date('2016-07-05T07:00:00.000Z')
+    const julyStartDate = '2016-07-05'
 
     expectThisSpec({
       startDate: julyStartDate,
@@ -40,6 +40,7 @@ describe('ISACalculator', function(){
       startDate: julyStartDate,
       stipendAmount: 0,
       takingTheLaptopStipend: true,
+      expectedAnnualSalary: '$$$',
     }).to.throw('expectedAnnualSalary must be an integer')
 
     expectThisSpec({
@@ -70,7 +71,7 @@ describe('ISACalculator', function(){
       stipendAmount: 0,
       takingTheLaptopStipend: true,
       expectedAnnualSalary: 150000,
-      earlyExitDate: new Date('2016-06-01T07:00:00.000Z'),
+      earlyExitDate: '2016-06-01',
     }).to.throw('earlyExitDate must be after startDate')
 
   })
