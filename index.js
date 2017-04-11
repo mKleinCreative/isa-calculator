@@ -1,6 +1,24 @@
 const moment = require('moment')
-/*
 
+const {
+  breaks,
+  holidays,
+  session1FundingAmount,
+  session2FundingAmount,
+  session3FundingAmount,
+  session4FundingAmount,
+  completeProgramFundingAmountRebate,
+  session1PaymentTermLength,
+  session2PaymentTermLength,
+  session3PaymentTermLength,
+  session4PaymentTermLength,
+  completeProgramPaymentTermRebate,
+  stipenedFeePaymentTerm,
+  laptopStipened,
+  payItForwardFundISAPercent,
+} = require('./data')
+
+/*
 Usage:
 
   ISACalculator({
@@ -18,40 +36,45 @@ Usage:
     takingTheLaptopStipend: true,
 
     // Ignored for now
+    // optional
     expectedAnnualSalary: '',
 
     // Ignored for now
+    // optional
     earlyExitDate: '',
   })
 
   // returns =>
   {
+    // INPUTS
     startDate,
     stipendAmount,
     takingTheLaptopStipend,
     expectedAnnualSalary,
-    // earlyExitDate,
-    session1EndDate
-    session2EndDate
-    session3EndDate
-    session4EndDate
-    session1Length
-    session2Length
-    session3Length
-    session4Length
-    session1percentageComplete
-    session2percentageComplete
-    session3percentageComplete
-    session4percentageComplete
+    earlyExitDate,
+
+    // OUTPUTS:
+    session1EndDate,
+    session2EndDate,
+    session3EndDate,
+    session4EndDate,
+    session1Length,
+    session2Length,
+    session3Length,
+    session4Length,
+    session1percentageComplete,
+    session2percentageComplete,
+    session3percentageComplete,
+    session4percentageComplete,
     endDate,
     cancellationDate,
-    totalStipendAmountRecieved
-    programFeeMonthlyPercentage
-    stipenedMonthlyPercentage
-    programFeePaymentTerm
-    stipenedFeePaymentTerm
-    totalFindingAmount
-    capPaymentAmount
+    totalStipendAmountRecieved,
+    programFeeMonthlyPercentage,
+    stipenedMonthlyPercentage,
+    programFeePaymentTerm,
+    stipenedFeePaymentTerm,
+    totalFindingAmount,
+    capPaymentAmount,
   }
 
 
@@ -82,15 +105,22 @@ const ISACalculator = function(spec){
   // Date
   const earlyExitDate = spec.earlyExitDate
   validateEarlyExitDate(earlyExitDate, startDate)
-  //
-  // const session1EndDate = calculateSessionEndDate(startDate)
-  // const session2EndDate = calculateSessionEndDate(session1EndDate)
-  // const session3EndDate = calculateSessionEndDate(session2EndDate)
-  // const session4EndDate = calculateSessionEndDate(session3EndDate)
-  // const session1Length = calculateSessionLength(startDate, session1EndDate)
-  // const session2Length = calculateSessionLength(session1EndDate, session2EndDate)
-  // const session3Length = calculateSessionLength(session2EndDate, session3EndDate)
-  // const session4Length = calculateSessionLength(session3EndDate, session4EndDate)
+
+  const {
+    session1EndDate,
+    session2EndDate,
+    session3EndDate,
+    session4EndDate,
+    numberOfDaysInSession1,
+    numberOfDaysInSession2,
+    numberOfDaysInSession3,
+    numberOfDaysInSession4,
+  } = calculateSessions(startDate)
+
+  const session1percentageComplete = calculateSession1percentageComplete(earlyExitDate)
+  const session2percentageComplete = calculateSession2percentageComplete(earlyExitDate)
+  const session3percentageComplete = calculateSession3percentageComplete(earlyExitDate)
+  const session4percentageComplete = calculateSession4percentageComplete(earlyExitDate)
 
   // Date
   // the Friday of the 40th week (minus week long breaks)
@@ -100,39 +130,43 @@ const ISACalculator = function(spec){
   // Date
   // 35 days after start date (rounded forward to Monday)
   const cancellationDate = calculateCancellationDate(startDate)
-
-  //
-  const expectedISAProgramFeeMonthlyPayment = calculateExpectedISAProgramFeeMonthlyPayment()
-
-  //
-  const expectedISAStipenedMonthlyPayment = calculateExpectedISAStipenedMonthlyPayment()
-
-  //
-  const earlyExitISAProgramFeeMonthlyPayment = calculateEarlyExitISAProgramFeeMonthlyPayment()
-
-  //
-  const earlyExitISAStipenedMonthlyPayment = calculateEarlyExitISAStipenedMonthlyPayment()
-
-  //
+  const totalStipendAmountRecieved = calculateTotalStipendAmountRecieved()
+  const programFeeMonthlyPercentage = calculateProgramFeeMonthlyPercentage()
+  const stipenedMonthlyPercentage = calculateStipenedMonthlyPercentage()
   const programFeePaymentTerm = calculateProgramFeePaymentTerm()
-
-  //
+  const stipenedFeePaymentTerm = calculateStipenedFeePaymentTerm()
   const totalFindingAmount = calculateTotalFindingAmount()
+  const capPaymentAmount = calculateCapPaymentAmount()
 
   return {
+    // Given Properties
     startDate,
     stipendAmount,
     takingTheLaptopStipend,
     expectedAnnualSalary,
     earlyExitDate,
+    // Calculated Properties
+    session1EndDate,
+    session2EndDate,
+    session3EndDate,
+    session4EndDate,
+    numberOfDaysInSession1,
+    numberOfDaysInSession2,
+    numberOfDaysInSession3,
+    numberOfDaysInSession4,
+    session1percentageComplete,
+    session2percentageComplete,
+    session3percentageComplete,
+    session4percentageComplete,
     endDate,
     cancellationDate,
-    expectedISAProgramFeeMonthlyPayment,
-    expectedISAStipenedMonthlyPayment,
-    earlyExitISAProgramFeeMonthlyPayment,
-    earlyExitISAStipenedMonthlyPayment,
+    totalStipendAmountRecieved,
+    programFeeMonthlyPercentage,
+    stipenedMonthlyPercentage,
     programFeePaymentTerm,
+    stipenedFeePaymentTerm,
     totalFindingAmount,
+    capPaymentAmount,
   }
 }
 
@@ -181,27 +215,104 @@ const validateEarlyExitDate = function(earlyExitDate, startDate){
 }
 
 
+
+
+const calculateSessions = (startDate) => {
+
+  const calculateSessionEndDate = function*(startDate){
+
+    let session1EndDate = moment(startDate).day(67)
+    let session2EndDate = session1StartDate.day(67)
+    let session3EndDate = session2StartDate.day(67)
+    let session4EndDate = session3StartDate.day(67)
+
+    let session2StartDate = session1EndDate.day(3)
+    let session3StartDate = session2EndDate.day(3)
+    let session4StartDate = session3EndDate.day(3)
+
+    yield session1EndDate
+    yield session2EndDate
+    yield session3EndDate
+    yield session4EndDate
+  }
+  let result = {}
+  result.session1EndDate = calculateSessionEndDate.next()
+  result.session2EndDate = calculateSessionEndDate.next()
+  result.session3EndDate = calculateSessionEndDate.next()
+  result.session4EndDate = calculateSessionEndDate.next()
+
+  const calculateSessionLength = function(){
+    // for ( true ) {
+    //   if (hasHoliday) {
+    //     days - 1
+    //   }
+    // }
+    return {
+      numberOfDaysInSession1,
+      numberOfDaysInSession2,
+      numberOfDaysInSession3,
+      numberOfDaysInSession4
+    }
+  }
+
+  return {
+    session1EndDate,
+    session2EndDate,
+    session3EndDate,
+    session4EndDate,
+    numberOfDaysInSession1,
+    numberOfDaysInSession2,
+    numberOfDaysInSession3,
+    numberOfDaysInSession4
+  }
+}
+
+const calculateSession2Length = function(){
+
+}
+
+const calculateSession3Length = function(){
+
+}
+
+const calculateSession4Length = function(){
+
+}
+
+const calculateSession1percentageComplete = function(){
+
+}
+
+const calculateSession2percentageComplete = function(){
+
+}
+
+const calculateSession3percentageComplete = function(){
+
+}
+
+const calculateSession4percentageComplete = function(){
+
+}
+
 const calculateEndDate = function(startDate){
   return moment(startDate).add(41, 'weeks').format('YYYY-MM-DD')
 }
+
 
 const calculateCancellationDate = function(startDate){
   return moment(startDate).add(35, 'days').format('YYYY-MM-DD')
 }
 
-const calculateExpectedISAProgramFeeMonthlyPayment = function(){
+const calculateTotalStipendAmountRecieved = function(){
 
 }
 
-const calculateExpectedISAStipenedMonthlyPayment = function(){
+const calculateProgramFeeMonthlyPercentage = function(){
 
 }
 
-const calculateEarlyExitISAProgramFeeMonthlyPayment = function(){
-
-}
-
-const calculateEarlyExitISAStipenedMonthlyPayment = function(){
+const calculateStipenedMonthlyPercentage = function(){
 
 }
 
@@ -209,8 +320,17 @@ const calculateProgramFeePaymentTerm = function(){
 
 }
 
+const calculateStipenedFeePaymentTerm = function(){
+
+}
+
 const calculateTotalFindingAmount = function(){
 
 }
+
+const calculateCapPaymentAmount = function(){
+
+}
+
 
 module.exports = ISACalculator

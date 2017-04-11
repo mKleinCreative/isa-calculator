@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha index_spec.js"
+    "test": "mocha index_spec.js calculators/*_spec.js"
   },
   "keywords": [],
   "author": "",
