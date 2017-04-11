@@ -104,26 +104,48 @@ const calculateNumberOfDaysInSession = function(from, to){
     const thursday  = dateToString(moment(weekBreak).add(3, 'days'))
     const friday    = dateToString(moment(weekBreak).add(4, 'days'))
 
-    if (monday in allDays) allDays[monday] = false
-    if (tuesday in allDays) allDays[tuesday] = false
-    if (wednesday in allDays) allDays[wednesday] = false
-    if (thursday in allDays) allDays[thursday] = false
-    if (friday in allDays) allDays[friday] = false
+    if (monday    in allDays) {
+      console.log('accounting for', monday, 'within week break', weekBreak)
+      allDays[monday] = false
+    }
+    if (tuesday   in allDays) {
+      console.log('accounting for', tuesday, 'within week break', weekBreak)
+      allDays[tuesday] = false
+    }
+    if (wednesday in allDays) {
+      console.log('accounting for', wednesday, 'within week break', weekBreak)
+      allDays[wednesday] = false
+    }
+    if (thursday  in allDays) {
+      console.log('accounting for', thursday, 'within week break', weekBreak)
+      allDays[thursday] = false
+    }
+    if (friday    in allDays) {
+      console.log('accounting for', friday, 'within week break', weekBreak)
+      allDays[friday] = false
+    }
   })
 
   holidays.forEach(function(holiday){
-    const date = dateToString(moment(holiday))
+    const date = dateToString(getHolidayObservationDate(holiday))
     if (date in allDays) allDays[date] = false
   })
-  
+
+  console.log('allDays', allDays)
   return Object.keys(allDays).filter(day => allDays[day]).length
 }
 
 const getHolidayObservationDate = function(holiday){
-  holiday = moment(holiday)
-  const day = holiday.format('dddd')
-  if (day === 'Sunday') return holiday.clone().add(1, 'day')
-  if (day === 'Saturday') return holiday.clone().subtract(1, 'day')
+  const day = moment(holiday).format('dddd')
+  if (day === 'Sunday') {
+    console.log('holiday observed 1 day after', holiday, moment(holiday).add(1, 'day'))
+    return moment(holiday).add(1, 'day')
+  }
+    if (day === 'Saturday') {
+    console.log('holiday observed 1 day before', holiday, moment(holiday).subtract(1, 'day'))
+    return moment(holiday).subtract(1, 'day')
+  }
+  return moment(holiday)
 }
 
 
