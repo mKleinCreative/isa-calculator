@@ -1,7 +1,7 @@
 const expect = require('chai').expect
 const LLFCalculator = require('./LLFCalculator')
 
-describe.only('LFFCalculator', function(){
+describe('LFFCalculator', function(){
   it('calculates the right amount of money owed for a full successful term at Learner\'s guild for the LLF', function(){
     expect(LLFCalculator({
       learnerLivingFundStipendAmount: 1384600,
