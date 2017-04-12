@@ -72,6 +72,7 @@ const calculateSessionEndDate = function(sessionStartDate){
 
   breaks.forEach(function(weekBreak){
     if (moment(weekBreak).isBetween(sessionStartDate, endDate)){
+      console.log('session end date pushed 1 week because of break', weekBreak)
       endDate = endDate.add(1, 'week')
     }
   })
@@ -98,6 +99,7 @@ const calculateNumberOfDaysInSession = function(from, to){
     const thursday  = dateToString(moment(weekBreak).add(3, 'days'))
     const friday    = dateToString(moment(weekBreak).add(4, 'days'))
 
+    if (monday    in allDays) console.log('ignoring week break when counting session days', weekBreak)
     if (monday    in allDays) allDays[monday]    = false
     if (tuesday   in allDays) allDays[tuesday]   = false
     if (wednesday in allDays) allDays[wednesday] = false
@@ -107,6 +109,7 @@ const calculateNumberOfDaysInSession = function(from, to){
 
   holidays.forEach(function(holiday){
     const date = dateToString(getHolidayObservationDate(holiday))
+    if (date in allDays) console.log('ignoring holiday when counting session days', holiday)
     if (date in allDays) allDays[date] = false
   })
 
