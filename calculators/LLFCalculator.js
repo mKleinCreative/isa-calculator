@@ -14,9 +14,19 @@ const {
   payItForwardFundISAPercent,
 } = require('../data')
 
-// module.exports = function(spec){
-//   const {
-//     stipendAmount,
-//     takingTheLaptopStipend
-//   } = spec
-// }
+module.exports = function(spec){
+
+  const {
+    learnerLivingFundStipendAmount,
+    takingTheLaptopStipend
+  } = spec
+
+  let livingFundMonthlyPercentage =
+    Math.round((learnerLivingFundStipendAmount / 13846) * 7.5) / 100
+
+  if(takingTheLaptopStipend) {
+    livingFundMonthlyPercentage++
+  }
+
+  return { livingFundMonthlyPercentage }
+}
