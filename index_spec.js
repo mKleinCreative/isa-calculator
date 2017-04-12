@@ -95,13 +95,15 @@ describe('ISACalculator', function(){
         programFeeMonthlyPercentage: 12.5, // <--- STATIC
         // totalStipendAmountTaken / (maxStipendAmount[15692] * 8.5%)
         // 15692 / (15692 * 8.5%)
+        // 8000 / (15692 * 8.5%)
+        // 0 / (15692 * 8.5%)
         stipenedMonthlyPercentage: 8.5, // %
         //
         // (0...42) months
         programFeePaymentTerm: 36, // Months
         stipenedFeePaymentTerm: 36, // Months STATIC
         //
-        totalFindingAmount: 25500.00,
+        totalFundingAmount: 25500.00,
         // (totalFindingAmount * 2)
         capPaymentAmount: 51000.00,
       })

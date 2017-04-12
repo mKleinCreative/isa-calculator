@@ -20,6 +20,24 @@ describe.only('sessionCalculator', function(){
     })
   })
 
+  it('calculates sessions data for a start date of 2017-05-01', function(){
+    expect(sessionCalculator("2017-05-01")).to.eql({
+      cancellationDate:  "",
+      session1StartDate: "",
+      session1EndDate:   "",
+      session2StartDate: "",
+      session2EndDate:   "",
+      session3StartDate: "",
+      session3EndDate:   "",
+      session4StartDate: "",
+      session4EndDate:   "",
+      numberOfDaysInSession1: 0,
+      numberOfDaysInSession2: 0,
+      numberOfDaysInSession3: 0,
+      numberOfDaysInSession4: 0,
+    })
+  })
+
   it('calculates sessions data for a start date of 2016-09-19', function(){
     expect(sessionCalculator("2016-09-19")).to.eql({
       cancellationDate:  "2016-10-24",

@@ -73,7 +73,7 @@ Usage:
     stipenedMonthlyPercentage,
     programFeePaymentTerm,
     stipenedFeePaymentTerm,
-    totalFindingAmount,
+    totalFundingAmount,
     capPaymentAmount,
   }
 
