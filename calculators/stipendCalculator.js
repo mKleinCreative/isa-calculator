@@ -12,20 +12,27 @@ const {
   stipenedFeePaymentTerm,
   laptopStipened,
   payItForwardFundISAPercent,
-} = require('./data')
+} = require('../data')
 
-const {
-  cancellationDate,
-  session1StartDate,
-  session1EndDate,
-  session2StartDate,
-  session2EndDate,
-  session3StartDate,
-  session3EndDate,
-  session4StartDate,
-  session4EndDate,
-  numberOfDaysInSession1,
-  numberOfDaysInSession2,
-  numberOfDaysInSession3,
-  numberOfDaysInSession4,
-}.require('./sessionCalculator')
+// const {
+//   cancellationDate,
+//   session1StartDate,
+//   session1EndDate,
+//   session2StartDate,
+//   session2EndDate,
+//   session3StartDate,
+//   session3EndDate,
+//   session4StartDate,
+//   session4EndDate,
+//   numberOfDaysInSession1,
+//   numberOfDaysInSession2,
+//   numberOfDaysInSession3,
+//   numberOfDaysInSession4,
+// } = require('./sessionCalculator')
+
+module.exports = function(spec){
+  const {
+    percentageTaken
+  } = spec
+
+}

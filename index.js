@@ -46,35 +46,168 @@ Usage:
 
   // returns =>
   {
-    // INPUTS
+    ////// INPUTS ///////
+
+    // startDate
+    // the date the learner first entered the school
     startDate,
+
+    // stipendAmount
+    // the amount of stipened the learn chose to recieve
+    // not including money for a laptop
+    // Integer ($ as cents)
+    // required
     stipendAmount,
+
+    // takingTheLaptopStipend
+    // If the learner took a laptop
+    // part o the learner living fund
+    // Boolean
+    // required
     takingTheLaptopStipend,
+
+    // IGNORED FOR NOW
     expectedAnnualSalary,
+    // IGNORED FOR NOW
     earlyExitDate,
 
-    // OUTPUTS:
+
+
+    ////// OUTPUTS ///////
+
+
+    // session1StartDate
+    // Date formated as 'YYYY-MM-DD'
+    session1StartDate,
+
+    // session1EndDate
+    // Date formated as 'YYYY-MM-DD'
     session1EndDate,
+
+    // session2StartDate
+    // Date formated as 'YYYY-MM-DD'
+    session2StartDate,
+
+    // session2EndDate
+    // Date formated as 'YYYY-MM-DD'
     session2EndDate,
+
+    // session3StartDate
+    // Date formated as 'YYYY-MM-DD'
+    session3StartDate,
+
+    // session3EndDate
+    // Date formated as 'YYYY-MM-DD'
     session3EndDate,
+
+    // session4StartDate
+    // Date formated as 'YYYY-MM-DD'
+    session4StartDate,
+
+    // session4EndDate
+    // Date formated as 'YYYY-MM-DD'
     session4EndDate,
-    session1Length,
-    session2Length,
-    session3Length,
-    session4Length,
+
+    // numberOfDaysInSession1
+    // the number of days you would attend school in session X
+    // Integer
+    numberOfDaysInSession1,
+
+    // numberOfDaysInSession2
+    // the number of days you would attend school in session X
+    // Integer
+    numberOfDaysInSession2,
+
+    // numberOfDaysInSession3
+    // the number of days you would attend school in session X
+    // Integer
+    numberOfDaysInSession3,
+
+    // numberOfDaysInSession4
+    // the number of days you would attend school in session X
+    // Integer
+    numberOfDaysInSession4,
+
+    // session1percentageComplete
+    // Date formated as 'YYYY-MM-DD'
+    // IGNORED FOR NOW
+    // ONLY RELEVANT TO LEARNERS WHO LEAVE EARLY
     session1percentageComplete,
+
+    // session2percentageComplete
+    // Date formated as 'YYYY-MM-DD'
+    // IGNORED FOR NOW
+    // ONLY RELEVANT TO LEARNERS WHO LEAVE EARLY
     session2percentageComplete,
+
+    // session3percentageComplete
+    // Date formated as 'YYYY-MM-DD'
+    // IGNORED FOR NOW
+    // ONLY RELEVANT TO LEARNERS WHO LEAVE EARLY
     session3percentageComplete,
+
+    // session4percentageComplete
+    // Date formated as 'YYYY-MM-DD'
+    // IGNORED FOR NOW
+    // ONLY RELEVANT TO LEARNERS WHO LEAVE EARLY
     session4percentageComplete,
+
+    // endDate
+    // the last day of school for a learner
+    // Date formated as 'YYYY-MM-DD'
     endDate,
+
+    // cancellationDate
+    // the date the learner left early, if they did so
+    // Date formated as 'YYYY-MM-DD' OR undefined
     cancellationDate,
-    totalStipendAmountRecieved,
-    programFeeMonthlyPercentage,
-    stipenedMonthlyPercentage,
-    programFeePaymentTerm,
-    stipenedFeePaymentTerm,
-    totalFundingAmount,
-    capPaymentAmount,
+
+    // payItForwardFundMonthlyPercentage
+    // STATIC 12.5%
+    payItForwardFundMonthlyPercentage,
+
+    // payItForwardFundPaymentTerm
+    // Integer of months
+    // based on how long you were in the program
+    payItForwardFundPaymentTerm,
+
+    // payItForwardFundTotalFundingAmount
+    // Integer of ($ as centers)
+    // based on how long the learner was in the program
+    // sum of the cost of each session
+    // subject to the 60% rule
+    payItForwardFundTotalFundingAmount,
+
+    // payItForwardFundCapPaymentAmount
+    // max you will ever pay back for the pay it forward fund
+    // Integer of ($ as centers)
+    payItForwardFundCapPaymentAmount,
+
+    // recievedPayItForwardFundRebate
+    // boolean
+    // true if they stayed the entire time
+    recievedPayItForwardFundRebate,
+
+    // learnerLivingFundMonthlyPercentage
+    // based on how much of the `totalLearnerLivingFund` the learner recieved
+    // float percentage
+    learnerLivingFundMonthlyPercentage,
+
+    // learnerLivingFundPaymentTerm
+    // 36 months STATIC
+    // Integer of months
+    learnerLivingFundPaymentTerm,
+
+    // learnerLivingFundMaxAmount
+    // the total amount of money, including the laptop, that the learner could
+    //   recieve if they stay for the whole program
+    // Integer of ($ as cents)
+    learnerLivingFundMaxAmount,
+
+    // learnerLivingFundRecievedAmount
+    // Integer of ($ as cents)
+    learnerLivingFundRecievedAmount,
+
   }
 
 

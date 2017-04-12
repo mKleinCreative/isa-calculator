@@ -97,9 +97,11 @@ describe('ISACalculator', function(){
         // 15692 / (15692 * 8.5%)
         // 8000 / (15692 * 8.5%)
         // 0 / (15692 * 8.5%)
-        stipenedMonthlyPercentage: 8.5, // %
+        livingFundMonthlyPercentage: 8.5, // %
         //
         // (0...42) months
+        // cumulative for each term (static months for each term)
+        // 60% rule applies
         programFeePaymentTerm: 36, // Months
         stipenedFeePaymentTerm: 36, // Months STATIC
         //
