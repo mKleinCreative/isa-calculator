@@ -27,9 +27,9 @@ Usage:
     // required
     startDate: '',
 
-    // Integer
+    // Integer of ($ as centers)
     // required
-    stipendAmount: '',
+    learnerLivingFundStipendAmount: 1384600,
 
     // Boolean
     // required
