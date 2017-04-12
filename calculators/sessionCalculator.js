@@ -72,7 +72,7 @@ const calculateSessionEndDate = function(sessionStartDate){
 
   breaks.forEach(function(weekBreak){
     if (moment(weekBreak).isBetween(sessionStartDate, endDate)){
-      console.log('session end date pushed 1 week because of break', weekBreak)
+      // console.log('session end date pushed 1 week because of break', weekBreak)
       endDate = endDate.add(1, 'week')
     }
   })

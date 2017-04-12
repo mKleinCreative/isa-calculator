@@ -1,7 +1,7 @@
 const expect = require('chai').expect
 const sessionCalculator = require('./sessionCalculator')
 
-describe.only('sessionCalculator', function(){
+describe('sessionCalculator', function(){
   it('calculates sessions data for a start date of 2017-06-19', function(){
     expect(sessionCalculator("2017-06-19")).to.eql({
       cancellationDate:  "2017-07-24",
@@ -22,19 +22,19 @@ describe.only('sessionCalculator', function(){
 
   it('calculates sessions data for a start date of 2017-05-01', function(){
     expect(sessionCalculator("2017-05-01")).to.eql({
-      cancellationDate:  "",
-      session1StartDate: "",
-      session1EndDate:   "",
-      session2StartDate: "",
-      session2EndDate:   "",
-      session3StartDate: "",
-      session3EndDate:   "",
-      session4StartDate: "",
-      session4EndDate:   "",
-      numberOfDaysInSession1: 0,
-      numberOfDaysInSession2: 0,
-      numberOfDaysInSession3: 0,
-      numberOfDaysInSession4: 0,
+      cancellationDate:  "2017-06-05",
+      session1StartDate: "2017-05-01",
+      session1EndDate:   "2017-07-14",
+      session2StartDate: "2017-07-17",
+      session2EndDate:   "2017-09-22",
+      session3StartDate: "2017-09-25",
+      session3EndDate:   "2017-12-01",
+      session4StartDate: "2017-12-04",
+      session4EndDate:   "2018-02-16",
+      numberOfDaysInSession1: 48,
+      numberOfDaysInSession2: 49,
+      numberOfDaysInSession3: 46,
+      numberOfDaysInSession4: 48,
     })
   })
 
