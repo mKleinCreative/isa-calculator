@@ -85,15 +85,12 @@ module.exports = function(spec){
   }
 
   const thirdSession = daysAttended => {
-    const percentageComplete = daysAttended / numberOfDaysInSession3
-    let percentageOwed = 0
-    console.log('daysAttended:', daysAttended)
-    console.log('percentageComplete:', percentageComplete)
-    if( percentageComplete < 0.6 ) {
-      percentageOwed = session3MaxFundingAmount / percentageComplete
-    } else if( percentageComplete >= 0.6 ){
-      percentageOwed = session3MaxFundingAmount
-    } return percentageOwed
+    const percentageComplete = Math.round((daysAttended / numberOfDaysInSession3) * 100) / 100
+    console.log('percentageComplete =', daysAttended,' / ',numberOfDaysInSession3, ' === ', percentageComplete)
+    console.log('session3MaxFundingAmount * percentageComplete', session3MaxFundingAmount, ' * ', percentageComplete, ' === ', (session3MaxFundingAmount * percentageComplete))
+    return percentageComplete <= 0.6
+      ? session3MaxFundingAmount * percentageComplete
+      : session3MaxFundingAmount
   }
 
   const fourthSession = daysAttended => {
@@ -106,11 +103,12 @@ module.exports = function(spec){
     } return percentageOwed
   }
 
-  const calculatePaymentTerm = (currentSession, currentSessionStart, earlyExitDate) => {
-    const
-  }
+  // const calculatePaymentTerm = (currentSession, currentSessionStart, earlyExitDate) => {
+  //   const
+  // }
 
   const calculateFundingAmountOwed = (currentSession, currentSessionStart, earlyExitDate) => {
+    console.log('calculateFundingAmountOwed', {currentSession, currentSessionStart, earlyExitDate})
     let daysAttended = schoolDayCalculator(currentSessionStart, earlyExitDate)
     let percentageOwed = undefined
 
@@ -122,41 +120,49 @@ module.exports = function(spec){
     }[ currentSession ]( daysAttended )
   }
 
-  if(moment(earlyExitDate).isBetween(session1StartDate, session1EndDate, 'days')){
+  if (moment(earlyExitDate).isBetween(session1StartDate, session1EndDate)){
     currentSession = 1
     session1FundingAmount = calculateFundingAmountOwed(currentSession, session1StartDate, earlyExitDate)
     session2FundingAmount = 0
     session3FundingAmount = 0
     session4FundingAmount = session4MaxFundingAmount
     recievedPayItForwardFundRebate = false
-    payItForwardFundPaymentTerm = calculatePaymentTerm(currentSession, session1StartDate, earlyExitDate)
+    // payItForwardFundPaymentTerm = calculatePaymentTerm(currentSession, session1StartDate, earlyExitDate)
     payItForwardFundTotalFundingAmount = session1FundingAmount
   }
 
-  else if (moment(earlyExitDate).isBetween(session2StartDate, session2EndDate, 'days')) {
+  else if (moment(earlyExitDate).isBetween(session2StartDate, session2EndDate)) {
     currentSession = 2
     session1FundingAmount = session1MaxFundingAmount
     session2FundingAmount = calculateFundingAmountOwed(currentSession, session2StartDate, earlyExitDate)
     session3FundingAmount = 0
     session4FundingAmount = session4MaxFundingAmount
     recievedPayItForwardFundRebate = false
-    payItForwardFundPaymentTerm = calculatePaymentTerm(currentSession, session1StartDate, earlyExitDate)
+    // payItForwardFundPaymentTerm = calculatePaymentTerm(currentSession, session1StartDate, earlyExitDate)
     payItForwardFundTotalFundingAmount = session1MaxFundingAmount + session2FundingAmount
   }
 
-  else if (moment(earlyExitDate).isBetween(session3StartDate, session3EndDate, 'days')) {
+  else if (moment(earlyExitDate).isBetween(session3StartDate, session3EndDate)) {
     currentSession = 3
     session1FundingAmount = session1MaxFundingAmount
     session2FundingAmount = session2MaxFundingAmount
-    session3FundingAmount = calculateFundingAmountOwed(currentSession, session3StartDate, earlyExitDate)
+    session3FundingAmount = calculateFundingAmountOwed(
+      currentSession,
+      session3StartDate,
+      earlyExitDate
+    )
     session4FundingAmount = session4MaxFundingAmount
     recievedPayItForwardFundRebate = false
-    payItForwardFundPaymentTerm = calculatePaymentTerm(currentSession, session1StartDate, earlyExitDate)
-    payItForwardFundTotalFundingAmount = session1MaxFundingAmount + session2MaxFundingAmount + session3FundingAmount
+    // payItForwardFundPaymentTerm = calculatePaymentTerm(currentSession, session1StartDate, earlyExitDate)
+    payItForwardFundTotalFundingAmount = (
+      session1MaxFundingAmount +
+      session2MaxFundingAmount +
+      session3FundingAmount
+    )
     console.log('session3FundingAmount:', session3FundingAmount)
   }
 
-  else if (moment(earlyExitDate).isBetween(session4StartDate, session4EndDate, 'days')){
+  else if (moment(earlyExitDate).isBetween(session4StartDate, session4EndDate)){
     currentSession = 4
     session1FundingAmount = session1MaxFundingAmount
     session2FundingAmount = session2MaxFundingAmount
