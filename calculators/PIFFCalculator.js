@@ -1,3 +1,5 @@
+const moment = require('moment')
+
 const {
   session1FundingAmount,
   session2FundingAmount,
@@ -12,33 +14,61 @@ const {
   stipenedFeePaymentTerm,
   laptopStipened,
   payItForwardFundISAPercent,
+  perfectCase,
 } = require('../data')
 
 const sessionCalculator = require('./sessionCalculator')
 
-module.exports = function( startDate, endDate, cancellationDate ){
+module.exports = function(spec){
   const {
-    startDate
-    endDate
+    programStartDate,
+    programTerminationDate,
   } = spec
 
-  let sessionCalculation = sessionCalculator(startDate) {
+  let {
+    cancellationDate,
+    session1StartDate,
+    session1EndDate,
+    session2StartDate,
+    session2EndDate,
+    session3StartDate,
+    session3EndDate,
+    session4StartDate,
+    session4EndDate,
+    numberOfDaysInSession1,
+    numberOfDaysInSession2,
+    numberOfDaysInSession3,
+    numberOfDaysInSession4,
+  } = sessionCalculator(programStartDate)
 
+  let currentSession
 
-    if(!numberOfDaysInSession4){
-      rebate === false
-    } return rebate
-  }
+  console.log('perfectCase:', perfectCase)
+  console.log('programStartDate:', programStartDate)
+  console.log('programTerminationDate:', programTerminationDate)
+  // if you complete the program, return the optimal funding solution.
+  if(programTerminationDate === session4EndDate) return perfectCase
+
+  switch(programTerminationDate) {
+    case programTerminationDate === session4EndDate:
+      return perfectCase
+      break;
+    case programTerminationDate >= session1EndDate && programTerminationDate <= session1StartDate:
+      currentSession = 1
+      break;
+    case programTerminationDate >= session2EndDate && programTerminationDate <= session2StartDate:
+      currentSession = 2
+
+      break;
+    case programTerminationDate >= session3EndDate && programTerminationDate <= session3StartDate:
+    currentSession = 3
+
+      break;
+
+      default: currentSession = 4
+
+  } console.log('currentSession:', currentSession)
 }
-
-
-
-const applyRebate(numberOfDaysInSession4) {
-  if(!numberOfDaysInSession4){
-    rebate === false
-  } return rebate
-}
-
 
 
   // 'programFeeMonthlyPercentage':        12.5, // STATIC
