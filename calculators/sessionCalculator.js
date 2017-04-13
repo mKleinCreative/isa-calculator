@@ -1,9 +1,10 @@
 const moment = require('moment')
-const {
-  startDates,
-  breaks,
-  holidays,
-} = require('../data')
+const { breaks } = require('../data')
+
+const { dateToString } = require('../utils')
+
+
+const schoolDayCalculator = require('./schoolDayCalculator')
 
 module.exports = function(session1StartDate){
   session1StartDate = moment(session1StartDate)
@@ -16,19 +17,19 @@ module.exports = function(session1StartDate){
   const session4StartDate = toNextMonday(session3EndDate)
   const session4EndDate   = calculateSessionEndDate(session4StartDate)
 
-  const numberOfDaysInSession1 = calculateNumberOfDaysInSession(
+  const numberOfDaysInSession1 = schoolDayCalculator(
     session1StartDate,
     session1EndDate
   )
-  const numberOfDaysInSession2 = calculateNumberOfDaysInSession(
+  const numberOfDaysInSession2 = schoolDayCalculator(
     session2StartDate,
     session2EndDate
   )
-  const numberOfDaysInSession3 = calculateNumberOfDaysInSession(
+  const numberOfDaysInSession3 = schoolDayCalculator(
     session3StartDate,
     session3EndDate
   )
-  const numberOfDaysInSession4 = calculateNumberOfDaysInSession(
+  const numberOfDaysInSession4 = schoolDayCalculator(
     session4StartDate,
     session4EndDate
   )
@@ -54,10 +55,6 @@ module.exports = function(session1StartDate){
   }
 }
 
-const dateToString = function(date){
-  return moment(date).format('YYYY-MM-DD')
-}
-
 const toNextMonday = function(date){
   if (moment(date).format('dddd') === 'Monday') return date
   return moment(date).endOf('week').add(2, 'days')
@@ -79,63 +76,6 @@ const calculateSessionEndDate = function(sessionStartDate){
   // DO NOT account for holidays here
   // All start dates on Monday
   // All end dates on Friday
-  // holidays are accounted for in calculateNumberOfDaysInSession
+  // holidays are accounted for in schoolDayCalculator
   return endDate
-}
-
-const calculateNumberOfDaysInSession = function(from, to){
-  let numberOfDays = moment(to).diff(from, 'days')
-
-  const allDays = generateObjectOfDates(from, numberOfDays)
-
-  Object.keys(allDays).forEach(function(day){
-    if (isWeekend(day)) allDays[day] = false
-  })
-
-  breaks.forEach(function(weekBreak){
-    const monday    = dateToString(moment(weekBreak))
-    const tuesday   = dateToString(moment(weekBreak).add(1, 'day'))
-    const wednesday = dateToString(moment(weekBreak).add(2, 'days'))
-    const thursday  = dateToString(moment(weekBreak).add(3, 'days'))
-    const friday    = dateToString(moment(weekBreak).add(4, 'days'))
-
-    if (monday    in allDays) console.log('ignoring week break when counting session days', weekBreak)
-    if (monday    in allDays) allDays[monday]    = false
-    if (tuesday   in allDays) allDays[tuesday]   = false
-    if (wednesday in allDays) allDays[wednesday] = false
-    if (thursday  in allDays) allDays[thursday]  = false
-    if (friday    in allDays) allDays[friday]    = false
-  })
-
-  holidays.forEach(function(holiday){
-    const date = dateToString(getHolidayObservationDate(holiday))
-    if (date in allDays) console.log('ignoring holiday when counting session days', holiday)
-    if (date in allDays) allDays[date] = false
-  })
-
-  return Object.keys(allDays).filter(day => allDays[day]).length
-}
-
-const getHolidayObservationDate = function(holiday){
-  const day = moment(holiday).format('dddd')
-  if (day === 'Sunday') return moment(holiday).add(1, 'day')
-  if (day === 'Saturday') return moment(holiday).subtract(1, 'day')
-  return moment(holiday)
-}
-
-
-const generateObjectOfDates = function(from, numberOfDays){
-  const allDays = {}
-  for (var i = 0; i <= numberOfDays; i++) {
-    const date = moment(from)
-      .clone()
-      .add(i, 'days')
-    allDays[dateToString(date)] = true
-  }
-  return allDays
-}
-
-const isWeekend = function(date){
-  const dayOfTheWeek = moment(date).format('dddd')
-  return dayOfTheWeek === 'Saturday' || dayOfTheWeek === 'Sunday'
 }
