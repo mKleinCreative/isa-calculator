@@ -86,13 +86,10 @@ module.exports = function(spec){
     },
   ]
 
-  const exitSession = (
-    moment(earlyExitDate).isBetween(session1StartDate, session1EndDate) ? 1 :
-    moment(earlyExitDate).isBetween(session2StartDate, session2EndDate) ? 2 :
-    moment(earlyExitDate).isBetween(session3StartDate, session3EndDate) ? 3 :
-    moment(earlyExitDate).isBetween(session4StartDate, session4EndDate) ? 4 :
-    false
-  )
+  const exitSession = sessions.findIndex(function(session, index){
+    return moment(earlyExitDate).isBetween(session.startDate, session.endDate)
+  }) + 1
+
   if (!exitSession) throw new Error('invalid earlyExitDate')
 
   sessions.forEach(function(session, index){
@@ -107,7 +104,7 @@ module.exports = function(spec){
   })
 
 
-  console.log('sessions', sessions)
+  // console.log('sessions', sessions)
 
   const session1FundingAmount = sessions[0].fundingAmount
   const session2FundingAmount = sessions[1].fundingAmount
