@@ -85,7 +85,9 @@ module.exports = function(spec){
   }
 
   const thirdSession = daysAttended => {
-    const percentageComplete = Math.round((daysAttended / numberOfDaysInSession3) * 100) / 100
+    // const percentageComplete = Math.round((daysAttended / numberOfDaysInSession3) * 100) / 100
+    // const percentageComplete = Math.round((daysAttended / numberOfDaysInSession3) * 1000) / 1000
+    const percentageComplete = daysAttended / numberOfDaysInSession3
     console.log('percentageComplete =', daysAttended,' / ',numberOfDaysInSession3, ' === ', percentageComplete)
     console.log('session3MaxFundingAmount * percentageComplete', session3MaxFundingAmount, ' * ', percentageComplete, ' === ', (session3MaxFundingAmount * percentageComplete))
     return percentageComplete <= 0.6
@@ -94,7 +96,7 @@ module.exports = function(spec){
   }
 
   const fourthSession = daysAttended => {
-    const percentageComplete =  daysAttended / numberOfDaysInSession4
+    const percentageComplete = daysAttended / numberOfDaysInSession4
     let percentageOwed = 0
     if( percentageComplete < 0.6 ) {
       percentageOwed = session4MaxFundingAmount / percentageComplete
@@ -158,6 +160,12 @@ module.exports = function(spec){
       session1MaxFundingAmount +
       session2MaxFundingAmount +
       session3FundingAmount
+    )
+    console.log('payItForwardFundTotalFundingAmount = ',
+      session1MaxFundingAmount, ' + ',
+      session2MaxFundingAmount, ' + ',
+      session3FundingAmount, ' === ',
+      payItForwardFundTotalFundingAmount
     )
     console.log('session3FundingAmount:', session3FundingAmount)
   }

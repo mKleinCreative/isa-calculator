@@ -79,11 +79,11 @@ describe.only('PIFFCalculator', function(){
     })).to.eql({
       session1FundingAmount:              1700000,
       session2FundingAmount:              850000,
-      session3FundingAmount:              199750,
+      session3FundingAmount:              198333.33333333334,
       session4FundingAmount:              0,
       recievedPayItForwardFundRebate:     false,
       payItForwardFundPaymentTerm:        38.8,
-      payItForwardFundTotalFundingAmount: 2748333,
+      payItForwardFundTotalFundingAmount: 2748333.3333333335,
     })
   })
 
