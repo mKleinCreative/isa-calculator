@@ -54,7 +54,7 @@ describe.only('PIFFCalculator', function(){
     })
   })
 
-  it.only('calculates the right amount of money owed for three sessions at Learner\'s guild before exiting for the PIFF', function(){
+  it('calculates the right amount of money owed for three sessions at Learner\'s guild before exiting for the PIFF', function(){
     expect(PIFFCalculator({
       programStartDate:                   '2017-06-19',
       earlyExitDate:                      '2017-12-21',

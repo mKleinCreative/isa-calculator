@@ -53,36 +53,34 @@ module.exports = function(spec){
     ),
   }
 
-
-
   const sessions = [
     {
-      startDate: session1StartDate,
-      endDate: session1EndDate,
+      startDate:          session1StartDate,
+      endDate:            session1EndDate,
       numberOfSchoolDays: numberOfDaysInSession1,
-      maxFundingAmount: session1MaxFundingAmount,
-      maxPaymentTerm: session1PaymentTermLength,
+      maxFundingAmount:   session1MaxFundingAmount,
+      maxPaymentTerm:     session1PaymentTermLength,
     },
     {
-      startDate: session2StartDate,
-      endDate: session2EndDate,
+      startDate:          session2StartDate,
+      endDate:            session2EndDate,
       numberOfSchoolDays: numberOfDaysInSession2,
-      maxFundingAmount: session2MaxFundingAmount,
-      maxPaymentTerm: session2PaymentTermLength,
+      maxFundingAmount:   session2MaxFundingAmount,
+      maxPaymentTerm:     session2PaymentTermLength,
     },
     {
-      startDate: session3StartDate,
-      endDate: session3EndDate,
+      startDate:          session3StartDate,
+      endDate:            session3EndDate,
       numberOfSchoolDays: numberOfDaysInSession3,
-      maxFundingAmount: session3MaxFundingAmount,
-      maxPaymentTerm: session3PaymentTermLength,
+      maxFundingAmount:   session3MaxFundingAmount,
+      maxPaymentTerm:     session3PaymentTermLength,
     },
     {
-      startDate: session4StartDate,
-      endDate: session4EndDate,
+      startDate:          session4StartDate,
+      endDate:            session4EndDate,
       numberOfSchoolDays: numberOfDaysInSession4,
-      maxFundingAmount: session4MaxFundingAmount,
-      maxPaymentTerm: session4PaymentTermLength,
+      maxFundingAmount:   session4MaxFundingAmount,
+      maxPaymentTerm:     session4PaymentTermLength,
     },
   ]
 
