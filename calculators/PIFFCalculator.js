@@ -99,6 +99,9 @@ module.exports = function(spec){
       sessionNumber === exitSession ? schoolDayCalculator(session.startDate, earlyExitDate) :
       0
     session.percentageComplete = session.numberOfSchoolDaysAttended / session.numberOfSchoolDays
+    if (session.percentageComplete < .5 && sessions[0]){
+      session.fundingAmount = 0
+    }
     if (session.percentageComplete >= .6) {
       session.fundingAmount = session.maxFundingAmount
       session.paymentTerm = session.maxPaymentTerm
