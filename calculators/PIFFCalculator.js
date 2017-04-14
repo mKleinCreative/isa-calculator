@@ -90,6 +90,8 @@ module.exports = function(spec){
     return moment(earlyExitDate).isBetween(session.startDate, session.endDate)
   }) + 1
 
+  console.log('exitSession:', exitSession)
+
   if (!exitSession) throw new Error('invalid earlyExitDate')
 
   sessions.forEach(function(session, index){
@@ -99,8 +101,13 @@ module.exports = function(spec){
       sessionNumber === exitSession ? schoolDayCalculator(session.startDate, earlyExitDate) :
       0
     session.percentageComplete = session.numberOfSchoolDaysAttended / session.numberOfSchoolDays
-    session.fundingAmount = session.maxFundingAmount * session.percentageComplete
-    session.paymentTerm = session.maxPaymentTerm * session.percentageComplete
+    if (session.percentageComplete >= .6) {
+      session.fundingAmount = session.maxFundingAmount
+      session.paymentTerm = session.maxPaymentTerm
+    } else {
+      session.fundingAmount = session.maxFundingAmount * session.percentageComplete
+      session.paymentTerm = session.maxPaymentTerm * session.percentageComplete
+    }
   })
 
 
@@ -116,6 +123,7 @@ module.exports = function(spec){
     session3FundingAmount +
     session4FundingAmount
   )
+  console.log('session3FundingAmount:', session3FundingAmount)
 
   const payItForwardFundPaymentTerm = (
     sessions[0].paymentTerm +
